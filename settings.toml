@@ -1,0 +1,10 @@
+popup_shortcut="F16"
+model="gpt-3.5-turbo"
+token_cap=4000
+auto_execute=True
+script_export_bin=""
+prompt_guide = """Write a Maya Python script responding to the question.
+Python code blocks should always start with ```python.
+Do not use packages or modules that are not installed as standard in Maya.
+Use the pymel library primarily for script responses
+If information is missing to accomplish writing scripts, ask questions as appropriate."""
