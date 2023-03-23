@@ -14,7 +14,7 @@ class DefaultLoader:
         with open("settings.toml", "rb") as f:
             self.__dict__.update(**tomllib.load(f))
             self.openai_key = os.environ["OPENAI_KEY"]
-            self.script_export_bin = Path(script_export_bin).expanduser().resolve()
+            self.script_export_bin = Path(self.script_export_bin).expanduser().resolve()
 
 
 DEFAULTS = DefaultLoader()

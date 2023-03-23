@@ -1,16 +1,19 @@
-import json
-import os
 import re
 from datetime import datetime
-from pathlib import Path
-
 import openai
-import pymel.core as pm
 from constants import DEFAULTS
 from entry import entry_factory
 from gui import OpenAIPymelGUI
+# import json
+# import os
+# from pathlib import Path
+
 
 openai.api_key = DEFAULTS.openai_key
+
+
+def _timestamp():
+    return datetime.now().strftime("script_%y%m%d_%H%M%S")
 
 
 class OpenAIPymel:
@@ -59,15 +62,15 @@ class OpenAIPymel:
 
         self.codelist = re.findall(pattern, response)
         for i, code in enumerate(self.codelist):
-            self.codelist[i] = re.sub("\A[\r?\n]", "", code)
-            self.codelist[i] = re.sub("[\r?\n]\Z", "", code)
+            self.codelist[i] = re.sub(r"\A[\r?\n]", "", code)
+            self.codelist[i] = re.sub(r"[\r?\n]\Z", "", code)
 
     def _reset(self):
         self.conversation.clear_conversation()
         self.message = ""
 
     def _export(self):
-        timestamp = timestamp()
+        timestamp = _timestamp()
 
         for i, code in enumerate(self.codelist):
             codefile = DEFAULTS.script_export_bin / f"{timestamp}_{i:02d}.py"
@@ -100,16 +103,13 @@ class OpenAIPymelConversation:
         ...
 
     def add_entry(self, mode, entry):
-        row = {timestamp(): entry_factory.get(mode, "usr")(entry)}
+        row = {_timestamp(): entry_factory.get(mode, "usr")(entry)}
         self.log.append(row)
-
-
-def timestamp():
-    return datetime.now().strftime("script_%y%m%d_%H%M%S")
 
 
 def main():
     op = OpenAIPymel()
+    print(op)
 
 
 if __name__ == "__main__":

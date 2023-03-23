@@ -1,5 +1,5 @@
 # check if maya
-import pymel.core as pm
+# import pymel.core as pm
 
 
 class OpenAIPymelGUI:
@@ -13,3 +13,6 @@ class OpenAIPymelGUI:
 
     def __init__(self, controller):
         self.controller = controller
+
+    def redraw(self):
+        ...
